@@ -1,31 +1,30 @@
 <template>
+  <div>
+    <TitleBar />
+  </div>
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/my-route">My Route</router-link>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent } from 'vue';
+import TitleBar from '@/components/layout/TitleBar.vue';
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+export default defineComponent({
+  name: 'App',
+  components: {
+    TitleBar
   }
-}
+})
+</script>
+
+<style lang="scss">
+//global styles
+@import "./common/styles/_variables.scss";
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "./common/styles/_bootswatch.scss";
 </style>

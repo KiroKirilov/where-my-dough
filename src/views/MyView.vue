@@ -1,18 +1,18 @@
 <template>
   <div class="home">
     <img alt="Vue logo" v-bind:src="require('../assets/logo.png')">
-    <MyComp msg="ivan" />
+    <MyComp :msg="'ivancho'" />
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { defineComponent } from 'vue'
 import MyComp from '@/components/MyComp.vue' // @ is an alias to /src
 
-@Options({
+export default defineComponent({
+  name: 'Home',
   components: {
     MyComp
   }
 })
-export default class Home extends Vue {}
 </script>

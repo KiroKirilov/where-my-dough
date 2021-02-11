@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div>{{ msg }}</div>
+    <div>{{ props.msg }}</div>
 
     <div>Counter: {{ count }}</div>
 
@@ -11,25 +11,25 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import { defineComponent } from 'vue';
+import useCounter from '@/composables/useCounter';
 
-@Options({
+export default defineComponent({
+  name: 'My Comp',
   props: {
     msg: String
+  },
+  setup(props) {
+    const { count, increment, decrement } = useCounter();
+
+    return {
+      count,
+      increment,
+      decrement,
+      props
+    };
   }
 })
-export default class MyComp extends Vue {
-  msg!: string;
-  count = 0;
-
-  increment() {
-    this.count++;
-  }
-
-  decrement() {
-    this.count--;
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

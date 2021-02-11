@@ -1,0 +1,9 @@
+export enum TitleBarEventNames {
+    CLOSE = 'CLOSE',
+    MAXIMIZE = 'MAXIMIZE',
+    UNMAXIMIZE = 'UNMAXIMIZE',
+    MINIMIZE = 'MINIMIZE',
+
+    WAS_MAXIMIZED = 'WAS_MAXIMIZED',
+    WAS_UNMAXIMIZED = 'WAS_UNMAXIMIZED'
+}
