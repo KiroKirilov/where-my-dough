@@ -19,12 +19,14 @@ export default defineComponent({
 <!-- Styles -->
 <style scoped lang="scss">
 @import "../../common/styles/_variables.scss";
+@import "../../common/styles/constants.scss";
+
 #sidebar {
     width: 6.25vw;
     position: fixed;
     bottom: 0;
     left: 0;
-    height: calc(100vh - 26px);
+    height: calc(100vh - #{$titleBarHeight});
     z-index: 999;
     background: $dark;
     color: $body-color;

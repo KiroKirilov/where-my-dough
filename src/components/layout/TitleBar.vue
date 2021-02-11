@@ -86,11 +86,12 @@ export default defineComponent({
 <style scoped lang="scss">
 @import "../../common/styles/_variables.scss";
 @import "../../common/styles/mixins.scss";
+@import "../../common/styles/constants.scss";
 
 .title-bar {
   display: block;
   position: fixed;
-  height: 26px;
+  height: $titleBarHeight;
   width: 100%;
   background: $dark;
   z-index: 999;
