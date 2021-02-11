@@ -3,6 +3,7 @@
   <nav id="sidebar">
     <SideNavLink to="/" title="Home" />
     <SideNavLink to="/about" title="About" />
+    <SideNavLink to="/my-route" title="My Route" />
   </nav>
 </template>
 
@@ -25,7 +26,7 @@ export default defineComponent({
 @import "../../../common/styles/constants.scss";
 
 #sidebar {
-    width: 6.25vw;
+    width: $sideNavWidth;
     position: fixed;
     bottom: 0;
     left: 0;

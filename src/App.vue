@@ -53,9 +53,9 @@ export default defineComponent({
   position: absolute;
   overflow: hidden;
   top: $titleBarHeight;
-  left: 6.25vw;
+  left: $sideNavWidth;
   height: calc(100vh - #{$titleBarHeight});
-  width: 93.75vw;
+  width: calc(100vw - #{$sideNavWidth});
   padding: 5px;
   background-color: $body-bg;
   border-top-left-radius: 10px;
