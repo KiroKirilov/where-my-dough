@@ -11,7 +11,6 @@
 
 <!-- Script -->
 <script lang="ts">
-import useRefWithSetter from '@/composables/useRefWithSetter';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -20,11 +19,7 @@ export default defineComponent({
     content: String
   },
   setup(props) {
-    const [isVisible, setIsVisible] = useRefWithSetter(false);
-
     return {
-      isVisible,
-      setIsVisible,
       props
     };
   }
