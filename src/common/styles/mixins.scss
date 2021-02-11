@@ -1,4 +1,5 @@
+@import "./functions.scss";
+
 @mixin transparentBackgroundColorMixin($color, $alpha) {
-    background-color: rgba(red($color), green($color), blue($color), $alpha) !important;
-  }
-  
+  background-color: applyAlphaToColor($color, $alpha) !important;
+}

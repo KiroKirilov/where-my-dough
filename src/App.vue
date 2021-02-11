@@ -14,8 +14,9 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import TitleBar from '@/components/layout/TitleBar.vue';
-import SideNav from '@/components/layout/SideNav.vue';
+import SideNav from '@/components/layout/SideNav/SideNav.vue';
 import ScrollbarHelpers from '@/common/helpers/ScrollbarHelpers';
+import 'bootstrap/dist/js/bootstrap.bundle';
 
 export default defineComponent({
   name: 'App',
@@ -34,8 +35,9 @@ export default defineComponent({
 <style lang="scss">
 //global styles
 @import "./common/styles/_variables.scss";
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 @import "./common/styles/_bootswatch.scss";
+@import "./common/styles/constants.scss";
 
 @import "./common/styles/mixins.scss";
 @import "../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css";
@@ -44,15 +46,19 @@ export default defineComponent({
   display: flex;
   width: 100%;
   height: 100vh;
+  background-color: $dark;
 }
 
 #content {
   position: absolute;
   overflow: hidden;
-  top: 4vh;
+  top: $titleBarHeight;
   left: 6.25vw;
-  height: 96vh;
+  height: calc(100vh - #{$titleBarHeight});
   width: 93.75vw;
+  padding: 5px;
+  background-color: $body-bg;
+  border-top-left-radius: 10px;
 }
 
 .mCSB_draggerRail {
