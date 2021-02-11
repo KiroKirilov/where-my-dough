@@ -85,10 +85,7 @@ export default defineComponent({
 <!-- Styles -->
 <style scoped lang="scss">
 @import "../../common/styles/_variables.scss";
-
-@mixin transparentBackgroundColorMixin($color, $alpha) {
-  background-color: rgba(red($color), green($color), blue($color), $alpha);
-}
+@import "../../common/styles/mixins.scss";
 
 .title-bar {
   display: block;
@@ -96,6 +93,7 @@ export default defineComponent({
   height: 26px;
   width: 100%;
   background: $dark;
+  z-index: 999;
 
   .drag-region {
     width: 100%;
