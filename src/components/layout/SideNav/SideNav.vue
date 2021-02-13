@@ -1,9 +1,10 @@
 <!-- Template -->
 <template>
   <nav id="sidebar">
-    <SideNavLink to="/" title="Home" />
-    <SideNavLink to="/about" title="About" />
-    <SideNavLink to="/my-route" title="My Route" />
+    <SideNavLink class="sidebar-link" to="/" title="Home" iconName="home" />
+    <hr class="side-nav-separator" />
+    <SideNavLink class="sidebar-link" to="/categories" title="Categories" iconName="labels" />
+    <SideNavLink class="sidebar-link" to="/my-route" title="My Route" />
   </nav>
 </template>
 
@@ -26,19 +27,33 @@ export default defineComponent({
 @import "../../../common/styles/constants.scss";
 
 #sidebar {
-    width: $sideNavWidth;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: calc(100vh - #{$titleBarHeight});
-    z-index: 999;
-    background: $dark;
-    color: $body-color;
-    display: flex;
-    justify-content: center;
-    padding-top: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  width: $sideNavWidth;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: calc(100vh - #{$titleBarHeight});
+  z-index: 999;
+  background: $dark;
+  color: $body-color;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  .sidebar-link {
+    margin: 5px 0;
+  }
+}
+
+.sidebar-link:first-child {
+  margin-top: 0px !important;
+}
+
+.side-nav-separator {
+  width: 75%;
+  margin: 2.5px auto;
+  border: none;
+  height: 2px;
+  background-color: $light;
 }
 </style>

@@ -35,7 +35,7 @@ export default defineComponent({
   &:hover {
     .tooltip-content {
       width: 120px;
-      color: $white;
+      color: $body-color;
       opacity: 1;
       visibility: visible;
 

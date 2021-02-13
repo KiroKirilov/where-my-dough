@@ -38,6 +38,7 @@ export default defineComponent({
 @import "bootstrap/scss/bootstrap";
 @import "./common/styles/_bootswatch.scss";
 @import "./common/styles/constants.scss";
+@import "./assets/material-design-iconic-font/css/material-design-iconic-font.min.css";
 
 @import "./common/styles/mixins.scss";
 @import "../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css";
@@ -56,7 +57,6 @@ export default defineComponent({
   left: $sideNavWidth;
   height: calc(100vh - #{$titleBarHeight});
   width: calc(100vw - #{$sideNavWidth});
-  padding: 5px;
   background-color: $body-bg;
   border-top-left-radius: 10px;
 }

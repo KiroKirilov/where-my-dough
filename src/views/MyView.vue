@@ -7,10 +7,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import MyComp from '@/components/MyComp.vue' // @ is an alias to /src
+import MyComp from '@/components/MyComp.vue'
 
 export default defineComponent({
-  name: 'Home',
+  name: 'My View',
   components: {
     MyComp
   }

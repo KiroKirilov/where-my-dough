@@ -7,7 +7,9 @@
       v-bind:class="{ active: isActive }"
     >
       <div class="link-indicator"></div>
-      <div class="side-nav-link"></div>
+      <div class="side-nav-link">
+        <Icon v-if="!!props.iconName" :name="props.iconName" />
+      </div>
     </div>
   </Tooltip>
 </template>
@@ -18,15 +20,18 @@ import useRefWithSetter from '@/composables/useRefWithSetter';
 import Tooltip from '@/components/misc/Tooltip.vue';
 import { defineComponent, watch } from 'vue';
 import { useRouter } from 'vue-router';
+import Icon from '@/components/misc/Icon.vue';
 
 export default defineComponent({
   name: 'Side Nav Link',
   components: {
-    Tooltip
+    Tooltip,
+    Icon
   },
   props: {
     to: String,
-    title: String
+    title: String,
+    iconName: String
   },
   setup(props) {
     const router = useRouter();
@@ -60,7 +65,6 @@ $transitionSpeed: 0.3s;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px 0;
 
   &.active {
     .link-indicator {
@@ -69,6 +73,7 @@ $transitionSpeed: 0.3s;
     }
 
     .side-nav-link {
+      color: $body-color;
       border-radius: 20px !important;
       background-color: $primary !important;
     }
@@ -81,6 +86,7 @@ $transitionSpeed: 0.3s;
     }
 
     .side-nav-link {
+      color: $body-color;
       border-radius: 18px;
       background-color: $primary;
     }
@@ -94,7 +100,7 @@ $transitionSpeed: 0.3s;
 .link-indicator {
   height: 0px;
   width: 0px;
-  background-color: $white;
+  background-color: $body-color;
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
   transition: $transitionSpeed;
@@ -105,9 +111,14 @@ $transitionSpeed: 0.3s;
 .side-nav-link {
   width: 50px;
   height: 100%;
-  background-color: $body-bg;
+  background-color: $gray-800;
   border-radius: 50%;
   transition: $transitionSpeed;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  color: $light;
 }
 </style>

@@ -17,7 +17,8 @@
       "./src/common/typedefs"
     ],
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "pouchdb-browser"
     ],
     "paths": {
       "@/*": [

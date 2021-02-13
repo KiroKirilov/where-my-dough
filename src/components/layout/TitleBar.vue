@@ -6,19 +6,19 @@
 
       <div class="title-bar-buttons-container">
         <div v-on:click="minimize" class="title-bar-button">
-          <window-minimize :size="16" />
+          <Icon name="window-minimize" />
         </div>
 
         <div v-on:click="unmaximize" v-if="isMaximized" class="title-bar-button">
-          <window-restore :size="16" />
+          <Icon name="window-restore" />
         </div>
 
         <div v-on:click="maximize" v-if="!isMaximized" class="title-bar-button">
-          <window-maximize :size="16" />
+          <Icon name="window-maximize" />
         </div>
 
         <div v-on:click="close" class="close-button title-bar-button">
-          <window-close :size="16" />
+          <Icon name="close" />
         </div>
       </div>
     </div>
@@ -28,21 +28,15 @@
 <!-- Script -->
 <script lang="ts">
 import { defineComponent } from 'vue';
-import WindowMinimize from 'vue3-material-design-icons/WindowMinimize.vue';
-import WindowMaximize from 'vue3-material-design-icons/WindowMaximize.vue';
-import WindowRestore from 'vue3-material-design-icons/WindowRestore.vue';
-import WindowClose from 'vue3-material-design-icons/WindowClose.vue';
 import { ipcRenderer } from 'electron';
 import { TitleBarEventNames } from '@/electron/ipc/event-names/titleBarEventNames';
 import useRefWithSetter from '@/composables/useRefWithSetter';
+import Icon from '@/components/misc/Icon.vue';
 
 export default defineComponent({
   name: 'Title Bar',
   components: {
-    WindowMinimize,
-    WindowRestore,
-    WindowMaximize,
-    WindowClose
+    Icon
   },
   setup() {
     const [isMaximized, setIsMaximized] = useRefWithSetter(false);
@@ -113,7 +107,7 @@ export default defineComponent({
     -webkit-app-region: no-drag;
 
     .title-bar-button {
-      width: 40px;
+      width: 44px;
       height: 100%;
       display: flex;
       justify-content: center;
