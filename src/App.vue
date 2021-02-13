@@ -68,4 +68,9 @@ export default defineComponent({
 .mCSB_dragger_bar {
   background-color: $gray-900 !important;
 }
+
+// make bootstrap dialog faster
+.show {
+  transition: opacity 50ms;
+}
 </style>

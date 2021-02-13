@@ -1,6 +1,9 @@
 <!-- Template -->
 <template>
-  <button type="button" v-bind:class="'btn btn-' + props.buttonType" class="icon-button">
+  <button
+    type="button"
+    v-bind:class="`btn btn-${props.buttonType} ${props.buttonSize}`"
+    class="icon-button">
     <Icon v-if="props.iconName" class="icon-button-icon" :name="props.iconName" />
     <div class="icon-button-text">{{props.text}}</div>
   </button>
@@ -19,6 +22,15 @@ export default defineComponent({
   props: {
     iconName: String,
     text: String,
+    buttonSize: {
+      type: String,
+      validator: function (value: string) {
+        return ['large', 'small'].indexOf(value) !== -1;
+      },
+      default: function () {
+        return 'small';
+      }
+    },
     buttonType: {
       type: String,
       validator: function (value: string) {
@@ -31,7 +43,15 @@ export default defineComponent({
             'warning',
             'info',
             'dark',
-            'light'
+            'light',
+            'outline-primary',
+            'outline-secondary',
+            'outline-success',
+            'outline-danger',
+            'outline-warning',
+            'outline-info',
+            'outline-dark',
+            'outline-light'
           ].indexOf(value) !== -1
         );
       },
@@ -56,9 +76,12 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 7px;
   font-weight: bold;
   color: $body-color;
+
+  &.small {
+    padding: 0px 7px;
+  }
 
   .icon-button-icon {
     font-size: 23px;

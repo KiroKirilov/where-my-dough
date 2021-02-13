@@ -1,37 +1,68 @@
 <!-- Template -->
 <template>
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">...</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+  <Dialog @close="$emit('close')" :isVisible="props.showForm" :title="dialogTitle">
+    <template v-slot:footer>
+      <div class="form-buttons-container">
+        <IconButton
+          v-on:click="$emit('close')"
+          class="form-button"
+          text="Close"
+          iconName="close"
+          buttonType="outline-light"
+          buttonSize="large"
+        />
+
+        <IconButton
+          class="form-button"
+          text="Save"
+          iconName="save"
+          buttonType="outline-primary"
+          buttonSize="large"
+        />
       </div>
-    </div>
-  </div>
+    </template>
+  </Dialog>
 </template>
 
 <!-- Script -->
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
+import Dialog from '@/components/misc/Dialog.vue';
+import { Category } from '@/db/models/category';
+import IconButton from '@/components/misc/IconButton.vue';
 
 export default defineComponent({
-  name: 'Categories Form'
+  name: 'Categories Form',
+  components: {
+    Dialog,
+    IconButton
+  },
+  emits: ['close'],
+  props: {
+    showForm: Boolean,
+    model: Category
+  },
+  setup(props) {
+    const dialogTitle = computed(() =>
+      props.model ? 'Edit Category' : 'New Category'
+    );
+
+    return {
+      dialogTitle,
+      props
+    };
+  }
 });
 </script>
 
 <!-- Styles -->
 <style scoped lang="scss">
+.buttons-container {
+  display: flex;
+}
+
+.form-button {
+  width: 81px;
+  margin: 0 5px;
+}
 </style>

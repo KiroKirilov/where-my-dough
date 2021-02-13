@@ -3,11 +3,10 @@
   <div>
     <PageHeader title="Categories" iconName="labels">
       <IconButton
-        v-on:click="onCreateNew"
+        v-on:click="setDialogVisible(true)"
         iconName="plus"
         text="Create Category"
         buttonType="success"
-        data-bs-toggle="modal" data-bs-target="#exampleModal"
       />
     </PageHeader>
   </div>
@@ -16,7 +15,7 @@
     <CategoriesList :categories="categories" />
   </div>
 
-  <CategoriesForm />
+  <CategoriesForm @close="setDialogVisible(false)" :showForm="dialogVisible" />
 </template>
 
 <!-- Script -->
@@ -27,6 +26,7 @@ import IconButton from '@/components/misc/IconButton.vue';
 import CategoriesList from '@/components/categories/CategoriesList.vue';
 import CategoriesForm from '@/components/categories/CategoriesForm.vue';
 import useAllCategories from '@/composables/categories/useAllCategories';
+import useRefWithSetter from '@/composables/useRefWithSetter';
 
 export default defineComponent({
   name: 'Categories',
@@ -38,16 +38,14 @@ export default defineComponent({
   },
   setup() {
     const { categories } = useAllCategories();
-
-    const onCreateNew = () => {
-      console.log('create new');
-    };
+    const [dialogVisible, setDialogVisible] = useRefWithSetter(false);
 
     watch(categories, (x) => console.log(x));
 
     return {
       categories,
-      onCreateNew
+      dialogVisible,
+      setDialogVisible
     };
   }
 });

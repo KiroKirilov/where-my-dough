@@ -18,7 +18,8 @@
     ],
     "types": [
       "webpack-env",
-      "pouchdb-browser"
+      "pouchdb-browser",
+      "bootstrap/dist/js/bootstrap.bundle"
     ],
     "paths": {
       "@/*": [

@@ -29,7 +29,7 @@ $teal:    #20c997 !default;
 $cyan:    #3498db !default;
 
 $primary:       $cyan !default;
-$secondary:     $gray-700 !default;
+$secondary:     $gray-500 !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
@@ -162,3 +162,7 @@ $close-text-shadow:                 none !default;
 // Code
 
 $pre-color:                         inherit !default;
+
+// Modal
+$modal-fade-transform:              scale(.8);
+$modal-transition:                  transform .1s ease-out !default;
