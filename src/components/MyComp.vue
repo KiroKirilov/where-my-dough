@@ -42,7 +42,9 @@ export default defineComponent({
 
     const createItem = () => {
       repo.create({
-        name: 'My Category'
+        name: 'My Category',
+        icon: 'delete',
+        iconColor: '#9a1d1d'
       });
     };
 

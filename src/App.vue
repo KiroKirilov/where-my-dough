@@ -69,6 +69,10 @@ export default defineComponent({
   background-color: $gray-900 !important;
 }
 
+.mCSB_inside > .mCSB_container {
+  margin-right: 15px !important;
+}
+
 // make bootstrap dialog faster
 .show {
   transition: opacity 50ms;

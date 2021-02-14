@@ -5,6 +5,7 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Created On</th>
+        <th scope="col">Icon</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -12,6 +13,10 @@
       <tr v-for="category in props.categories" :key="category._id">
         <td>{{category.name}}</td>
         <td>{{$filters.formatDate(category.createdOn)}}</td>
+        <td>
+          <Icon v-if="category.icon" :name="category.icon" :color="category.iconColor" class="categories-list-icon" />
+          <div v-if="!category.icon">n/a</div>
+        </td>
         <td>
           <div>
             <button type="button" class="btn btn-primary">
@@ -77,6 +82,10 @@ button {
       border-color: darken($danger, $darkenAmountOnHover);
     }
   }
+}
+
+.categories-list-icon {
+  font-size: 23px;
 }
 
 tr {

@@ -1,6 +1,6 @@
 <!-- Template -->
 <template>
-  <i v-bind:class="'zmdi zmdi-' + props.name"></i>
+  <i v-bind:class="'zmdi zmdi-' + props.name" :style="{color: props.color}"></i>
 </template>
 
 <!-- Script -->
@@ -10,7 +10,8 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'Icon',
   props: {
-    name: String
+    name: String,
+    color: String
   },
   setup(props) {
     return {

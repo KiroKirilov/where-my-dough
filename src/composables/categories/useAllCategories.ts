@@ -16,6 +16,8 @@ export default function useAllCategories() {
   onMounted(getAllCategories);
 
   return {
-    categories
+    categories,
+    getAllCategories,
+    categoriesRepo
   }
 }

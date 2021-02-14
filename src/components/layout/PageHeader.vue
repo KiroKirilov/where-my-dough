@@ -1,15 +1,15 @@
 <!-- Template -->
 <template>
   <div class="page-header">
-    <div class="page-header-icon">
-      <Icon :name="props.iconName" />
+    <div class="page-header-elements">
+      <div class="page-header-icon">
+        <Icon :name="props.iconName" />
+      </div>
+
+      <div class="page-header-title">{{props.title}}</div>
     </div>
 
-    <div class="page-header-title">
-      {{props.title}}
-    </div>
-
-    <div v-if="$slots.default" class="additional-content-separator"></div>
+    <div v-if="$slots.default && props.showSeparator" class="additional-content-separator"></div>
 
     <slot></slot>
   </div>
@@ -27,13 +27,17 @@ export default defineComponent({
   },
   props: {
     title: String,
-    iconName: String
+    iconName: String,
+    showSeparator: {
+      type: Boolean,
+      default: true
+    }
   },
   setup(props) {
     return {
       props,
       console: console
-    }
+    };
   }
 });
 </script>
@@ -49,9 +53,16 @@ export default defineComponent({
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  box-shadow: 0 1px 0 rgba(2,2,3,0.2),0 1.5px 0 rgba(4,4,5,0.05),0 2px 0 rgba(2,2,3,0.05);
+  box-shadow: 0 1px 0 rgba(2, 2, 3, 0.2), 0 1.5px 0 rgba(4, 4, 5, 0.05),
+    0 2px 0 rgba(2, 2, 3, 0.05);
   margin-bottom: 1px;
   height: 47px;
+}
+
+.page-header-elements {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .page-header-icon {
@@ -61,7 +72,7 @@ export default defineComponent({
 }
 
 .page-header-title {
-  font-weight: bold;;
+  font-weight: bold;
 }
 
 .additional-content-separator {

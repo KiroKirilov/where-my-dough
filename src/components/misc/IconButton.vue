@@ -3,8 +3,15 @@
   <button
     type="button"
     v-bind:class="`btn btn-${props.buttonType} ${props.buttonSize}`"
-    class="icon-button">
-    <Icon v-if="props.iconName" class="icon-button-icon" :name="props.iconName" />
+    class="icon-button"
+  >
+    <Icon
+      :color="props.iconColor"
+      v-if="props.iconName"
+      class="icon-button-icon"
+      :name="props.iconName"
+      v-bind:class="props.iconClass"
+    />
     <div class="icon-button-text">{{props.text}}</div>
   </button>
 </template>
@@ -22,6 +29,8 @@ export default defineComponent({
   props: {
     iconName: String,
     text: String,
+    iconClass: String,
+    iconColor: String,
     buttonSize: {
       type: String,
       validator: function (value: string) {
@@ -85,7 +94,7 @@ export default defineComponent({
 
   .icon-button-icon {
     font-size: 23px;
-    margin-right: 6px;
+    // margin-right: 6px;
   }
 
   .icon-button-text {

@@ -3,24 +3,32 @@
   <div class="tooltip-host">
     <slot></slot>
 
-    <div class="tooltip-relative">
-      <div class="tooltip-content">{{props.content}}</div>
+    <div class="tooltip-relative" v-bind:class="placementClass">
+      <div class="tooltip-content" v-bind:class="placementClass">{{props.content}}</div>
     </div>
   </div>
 </template>
 
 <!-- Script -->
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Tooltip',
   props: {
-    content: String
+    content: String,
+    placement: {
+      type: String,
+      validator: (value: string) => ['right', 'top'].indexOf(value) !== -1,
+      default: () => 'right'
+    }
   },
   setup(props) {
+    const placementClass = computed(() => `placement-${props.placement}`);
+
     return {
-      props
+      props,
+      placementClass
     };
   }
 });
@@ -34,7 +42,7 @@ export default defineComponent({
 .tooltip-host {
   &:hover {
     .tooltip-content {
-      width: 120px;
+      width: max-content;
       color: $body-color;
       opacity: 1;
       visibility: visible;
@@ -52,8 +60,16 @@ export default defineComponent({
   position: relative;
   width: 0;
   height: 0;
-  top: -75%;
-  left: 110%;
+
+  &.placement-right {
+    left: calc(100% + 10px);
+    top: -80%;
+  }
+
+  &.placement-top {
+    left: -73%;
+    top: calc(-150% - 10px);
+  }
 }
 
 .tooltip-content {
@@ -63,22 +79,38 @@ export default defineComponent({
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   transition: 0.2s;
   transition-property: width, opacity;
   opacity: 0;
   visibility: hidden;
+  padding: 0 10px;
+  padding-bottom: 5px;
+  padding-top: 2px;
+
+  &.placement-right {
+    &::after {
+      border-color: transparent $dark transparent transparent;
+      top: 50%;
+      right: 100%;
+    }
+  }
+
+  &.placement-top {
+    &::after {
+      border-color: $dark transparent transparent transparent;
+      top: 119%;
+      left: 46%;
+    }
+  }
 
   &::after {
     content: "";
     position: absolute;
-    top: 50%;
-    right: 100%;
     margin-top: -5px;
     border-width: 0px;
     border-style: solid;
-    border-color: transparent $dark transparent transparent;
     transition: 0.2s;
     transition-property: width, opacity;
     opacity: 0;
