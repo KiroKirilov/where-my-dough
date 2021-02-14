@@ -3,7 +3,7 @@
   <div>
     <PageHeader title="Categories" iconName="labels">
       <IconButton
-        v-on:click="setDialogVisible(true)"
+        v-on:click="createdClicked"
         iconName="plus"
         text="Create Category"
         buttonType="success"
@@ -13,15 +13,15 @@
   </div>
 
   <div>
-    <CategoriesList :categories="categories" />
+    <CategoriesList :categories="categories" @edit="editClicked" />
   </div>
 
-  <CategoriesForm @save="saveCategory" @close="setDialogVisible(false)" :showForm="dialogVisible" />
+  <CategoriesForm @save="saveCategory" @close="setDialogVisible(false)" :showForm="dialogVisible" :model="model" />
 </template>
 
 <!-- Script -->
 <script lang="ts">
-import { defineComponent, watch } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import PageHeader from '@/components/layout/PageHeader.vue';
 import IconButton from '@/components/misc/IconButton.vue';
 import CategoriesList from '@/components/categories/CategoriesList.vue';
@@ -41,22 +41,45 @@ export default defineComponent({
   setup() {
     const { categories, getAllCategories, categoriesRepo } = useAllCategories();
     const [dialogVisible, setDialogVisible] = useRefWithSetter(false);
+    const model = ref<Category | null>(null);
 
     watch(categories, (x) => console.log(x));
 
     const saveCategory = (category: Category) => {
-      categoriesRepo.create(category)
-        .then(() => {
-          getAllCategories();
-          setDialogVisible(false);
-        })
+      if (category._id) {
+        categoriesRepo.update(category)
+          .then(() => {
+            getAllCategories();
+            setDialogVisible(false);
+          })
+      } else {
+        categoriesRepo.create(category)
+          .then(() => {
+            getAllCategories();
+            setDialogVisible(false);
+          })
+      }
+    }
+
+    const createdClicked = () => {
+      model.value = null;
+      setDialogVisible(true);
+    }
+
+    const editClicked = (category: Category) => {
+      model.value = category;
+      console.log(category);
+      setDialogVisible(true);
     }
 
     return {
       categories,
       dialogVisible,
       setDialogVisible,
-      saveCategory
+      saveCategory,
+      model,
+      editClicked,
+      createdClicked
     };
   }
 });

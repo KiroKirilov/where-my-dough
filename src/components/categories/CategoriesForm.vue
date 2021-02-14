@@ -75,7 +75,7 @@ import IconPicker from '@/components/misc/IconPicker.vue';
 import useDebouncedRef from '@/composables/useDebouncedRef';
 
 export default defineComponent({
-  name: 'Categories Form',
+  name: 'CategoriesForm',
   components: {
     Dialog,
     IconButton,
@@ -84,7 +84,7 @@ export default defineComponent({
   emits: ['close', 'save'],
   props: {
     showForm: Boolean,
-    model: Category
+    model: (Object as unknown) as () => Category | null
   },
   setup(props, { emit }) {
     const dialogTitle = computed(() =>
@@ -94,11 +94,27 @@ export default defineComponent({
     const icon = ref('money');
     const iconColor = useDebouncedRef('#ffffff');
     const name = ref('');
-    const valdiationErrors = ref<any>({})
+    const valdiationErrors = ref<any>({});
 
-    watch(() => props.showForm, () => {
-      valdiationErrors.value = {};
-    })
+    watch(
+      () => props.showForm,
+      () => {
+        valdiationErrors.value = {};
+      }
+    );
+
+    watch(
+      () => props.model?._id,
+      () => {
+        const model = props.model;
+        name.value = model?.name || '';
+        icon.value = model?.icon || 'money';
+        iconColor.value = model?.iconColor || '#ffffff';
+      },
+      {
+        deep: true
+      }
+    );
 
     const handleSave = () => {
       if (!name.value) {
@@ -109,12 +125,13 @@ export default defineComponent({
       }
 
       const model = {
+        ...props.model,
         name: name.value,
         icon: icon.value,
         iconColor: iconColor.value
       };
 
-      emit('save', model)
+      emit('save', model);
     };
 
     return {

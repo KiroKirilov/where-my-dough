@@ -20,6 +20,10 @@ export abstract class DbRepository<TModel extends BaseModel> {
     return db.post(model);
   }
 
+  public update(model: TModel) {
+    return db.put(model);
+  }
+
   public clearDb() {
     console.log('a');
   }

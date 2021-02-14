@@ -118,7 +118,9 @@ $pickerBg: #45484a;
   background-color: $pickerBg;
   border-radius: 5px;
   opacity: 0;
-  transition: 0.2s;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease-in, visibility 0.2s;
 
   &::after {
     content: "";
@@ -132,6 +134,7 @@ $pickerBg: #45484a;
   }
 
   &.picker-visible {
+    visibility: visible;
     opacity: 1;
   }
 }
@@ -174,5 +177,9 @@ $pickerBg: #45484a;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.high-z-index {
+  z-index: 999;
 }
 </style>
