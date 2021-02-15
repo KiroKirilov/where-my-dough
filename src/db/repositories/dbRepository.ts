@@ -6,17 +6,29 @@ const db = DbProvider.getDbInstance();
 export abstract class DbRepository<TModel extends BaseModel> {
   protected abstract type: string;
 
-  public getAll(): Promise<TModel[]> {
-    return db.find({
+  public async getAll(): Promise<TModel[]> {
+    await db.createIndex({
+      index: { fields: ['createdOn', 'type'] }
+    });
+
+    const data = await db.find({
       selector: {
+        createdOn: {
+          $gt: null
+        },
         type: this.type
-      }
-    }).then(x => (x.docs as unknown) as TModel[])
+      },
+      sort: [{
+        createdOn: 'desc'
+      }]
+    });
+
+    return (data.docs as unknown) as TModel[];
   }
 
   public create(model: TModel) {
     model.type = this.type;
-    model.createdOn = new Date();
+    model.createdOn = new Date().getTime();
     return db.post(model);
   }
 

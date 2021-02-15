@@ -71,6 +71,15 @@ export default defineComponent({
 
 .mCSB_inside > .mCSB_container {
   margin-right: 15px !important;
+
+  &.mCS_no_scrollbar_y {
+    margin-right: 0 !important;
+  }
+}
+
+#mCSB_2_scrollbar_vertical {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 // make bootstrap dialog faster

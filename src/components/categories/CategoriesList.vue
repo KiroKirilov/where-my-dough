@@ -1,6 +1,6 @@
 <!-- Template -->
 <template>
-  <table class="table table-striped table-hover">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">Name</th>

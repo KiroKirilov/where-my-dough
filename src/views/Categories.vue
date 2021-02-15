@@ -13,7 +13,11 @@
   </div>
 
   <div>
-    <CategoriesList :categories="categories" @edit="editClicked" />
+    <CategoriesList v-if="!categoriesError" :categories="categories" @edit="editClicked"  />
+  </div>
+
+  <div v-if="categoriesError">
+    <ErrorMessage class="categories-error" message="An error ocurred while fetching your categories :/" />
   </div>
 
   <CategoriesForm @save="saveCategory" @close="setDialogVisible(false)" :showForm="dialogVisible" :model="model" />
@@ -24,6 +28,7 @@
 import { defineComponent, ref, watch } from 'vue';
 import PageHeader from '@/components/layout/PageHeader.vue';
 import IconButton from '@/components/misc/IconButton.vue';
+import ErrorMessage from '@/components/misc/ErrorMessage.vue';
 import CategoriesList from '@/components/categories/CategoriesList.vue';
 import CategoriesForm from '@/components/categories/CategoriesForm.vue';
 import useAllCategories from '@/composables/categories/useAllCategories';
@@ -36,10 +41,11 @@ export default defineComponent({
     PageHeader,
     CategoriesList,
     IconButton,
-    CategoriesForm
+    CategoriesForm,
+    ErrorMessage
   },
   setup() {
-    const { categories, getAllCategories, categoriesRepo } = useAllCategories();
+    const { categories, getAllCategories, categoriesRepo, categoriesError } = useAllCategories();
     const [dialogVisible, setDialogVisible] = useRefWithSetter(false);
     const model = ref<Category | null>(null);
 
@@ -79,7 +85,8 @@ export default defineComponent({
       saveCategory,
       model,
       editClicked,
-      createdClicked
+      createdClicked,
+      categoriesError
     };
   }
 });
@@ -89,5 +96,9 @@ export default defineComponent({
 <style scoped lang="scss">
 :deep(.new-category-icon) {
   margin-right: 6px;
+}
+
+.categories-error {
+  margin-top: 10px;
 }
 </style>

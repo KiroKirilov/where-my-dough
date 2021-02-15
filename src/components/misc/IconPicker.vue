@@ -30,6 +30,7 @@
                 v-for="icon in iconsMatchingSearchQuery"
                 v-bind:key="icon"
                 class="col-2 picker-icon-button-col"
+                v-bind:class="{'d-none': !pickerVisible}"
               >
                   <Tooltip :content="icon" class="icon-tooltip">
                     <IconButton

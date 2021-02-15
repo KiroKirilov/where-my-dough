@@ -1,7 +1,7 @@
 import moment from 'moment';
 
-export default function dateFormatFilter(value: string) {
-  if (!value?.trim()) {
+export default function dateFormatFilter(value: number) {
+  if (!value) {
     return 'n/a'
   }
 

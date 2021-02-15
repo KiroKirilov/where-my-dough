@@ -8,9 +8,15 @@ const categoriesRepo = RepositoryFactory.createInstance(CategoriesRepository);
 
 export default function useAllCategories() {
   const categories = ref<Category[]>([]);
+  const categoriesError = ref(false);
 
   const getAllCategories = async () => {
-    categories.value = await categoriesRepo.getAll();
+    try {
+      categories.value = await categoriesRepo.getAll();
+    } catch (error) {
+      console.error(error);
+      categoriesError.value = true;
+    }
   }
 
   onMounted(getAllCategories);
@@ -18,6 +24,7 @@ export default function useAllCategories() {
   return {
     categories,
     getAllCategories,
-    categoriesRepo
+    categoriesRepo,
+    categoriesError
   }
 }

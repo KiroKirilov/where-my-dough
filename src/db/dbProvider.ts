@@ -6,10 +6,6 @@ PouchDb
 
 const db = new PouchDb('local_db');
 
-db.createIndex({
-  index: { fields: ['type'] }
-})
-
 export class DbProvider {
   public static getDbInstance() {
     return db;

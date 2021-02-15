@@ -1,5 +1,5 @@
 export abstract class BaseModel {
   _id?: string;
-  createdOn?: Date;
+  createdOn?: Date | number;
   type?: string;
 }
