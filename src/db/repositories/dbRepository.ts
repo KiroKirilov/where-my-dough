@@ -36,6 +36,10 @@ export abstract class DbRepository<TModel extends BaseModel> {
     return db.put(model);
   }
 
+  public delete(model: TModel) {
+    return db.remove(model._id || '', model._rev || '', undefined);
+  }
+
   public clearDb() {
     console.log('a');
   }

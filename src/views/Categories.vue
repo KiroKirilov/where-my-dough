@@ -13,19 +13,32 @@
   </div>
 
   <div>
-    <CategoriesList v-if="!categoriesError" :categories="categories" @edit="editClicked"  />
+    <CategoriesList
+      v-if="!categoriesError"
+      :categories="categories"
+      @edit="editClicked"
+      @delete="deleteClicked"
+    />
   </div>
 
   <div v-if="categoriesError">
-    <ErrorMessage class="categories-error" message="An error ocurred while fetching your categories :/" />
+    <ErrorMessage
+      class="categories-error"
+      message="An error ocurred while fetching your categories :/"
+    />
   </div>
 
-  <CategoriesForm @save="saveCategory" @close="setDialogVisible(false)" :showForm="dialogVisible" :model="model" />
+  <CategoriesForm
+    @save="saveCategory"
+    @close="setDialogVisible(false)"
+    :showForm="dialogVisible"
+    :model="model"
+  />
 </template>
 
 <!-- Script -->
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, ref } from 'vue';
 import PageHeader from '@/components/layout/PageHeader.vue';
 import IconButton from '@/components/misc/IconButton.vue';
 import ErrorMessage from '@/components/misc/ErrorMessage.vue';
@@ -45,38 +58,49 @@ export default defineComponent({
     ErrorMessage
   },
   setup() {
-    const { categories, getAllCategories, categoriesRepo, categoriesError } = useAllCategories();
+    const {
+      categories,
+      getAllCategories,
+      categoriesRepo,
+      categoriesError,
+      loading
+    } = useAllCategories();
     const [dialogVisible, setDialogVisible] = useRefWithSetter(false);
     const model = ref<Category | null>(null);
 
-    watch(categories, (x) => console.log(x));
-
     const saveCategory = (category: Category) => {
       if (category._id) {
-        categoriesRepo.update(category)
-          .then(() => {
-            getAllCategories();
-            setDialogVisible(false);
-          })
+        categoriesRepo.update(category).then(() => {
+          getAllCategories();
+          setDialogVisible(false);
+        });
       } else {
-        categoriesRepo.create(category)
-          .then(() => {
-            getAllCategories();
-            setDialogVisible(false);
-          })
+        categoriesRepo.create(category).then(() => {
+          getAllCategories();
+          setDialogVisible(false);
+        });
       }
-    }
+    };
 
     const createdClicked = () => {
       model.value = null;
       setDialogVisible(true);
-    }
+    };
 
     const editClicked = (category: Category) => {
       model.value = category;
-      console.log(category);
       setDialogVisible(true);
-    }
+    };
+
+    const deleteClicked = (category: Category) => {
+      if (category?._id) {
+        categoriesRepo.delete(category).then(() => {
+          getAllCategories();
+        });
+      }
+
+      // TODO: Update expenses for this category
+    };
 
     return {
       categories,
@@ -86,7 +110,9 @@ export default defineComponent({
       model,
       editClicked,
       createdClicked,
-      categoriesError
+      categoriesError,
+      loading,
+      deleteClicked
     };
   }
 });

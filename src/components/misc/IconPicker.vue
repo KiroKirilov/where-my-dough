@@ -83,7 +83,6 @@ export default defineComponent({
 
     const chooseNewIcon = (newIcon: string) => {
       pickerVisible.value = false;
-      console.log(newIcon);
       emit('update:modelValue', newIcon);
     }
 

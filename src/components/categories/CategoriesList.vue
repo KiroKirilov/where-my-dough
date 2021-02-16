@@ -1,49 +1,36 @@
 <!-- Template -->
 <template>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Created On</th>
-        <th scope="col">Icon</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="category in props.categories" :key="category._id">
-        <td>{{category.name}}</td>
-        <td>{{$filters.formatDate(category.createdOn)}}</td>
-        <td>
+  <Grid :data="props.categories" :columns="columns">
+    <template v-slot:header-actions></template>
+
+    <template v-slot:cell-icon="slotProps">
           <Icon
-            v-if="category.icon"
-            :name="category.icon"
-            :color="category.iconColor"
+            v-if="slotProps.dataItem.icon"
+            :name="slotProps.dataItem.icon"
+            :color="slotProps.dataItem.iconColor"
             class="categories-list-icon"
           />
-          <div v-if="!category.icon">n/a</div>
-        </td>
-        <td>
-          <div class="actions-buttons-container">
-            <IconButton
-              v-on:click="$emit('edit', category)"
-              iconName="edit"
-              text=""
-              buttonType="primary"
-              class="action-button"
-            />
+          <div v-if="!slotProps.dataItem.icon">n/a</div>
+    </template>
 
-            <IconButton
-              v-on:click="$emit('delete', category)"
-              iconName="delete"
-              text=""
-              buttonType="danger"
-              class="action-button"
-            />
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <template v-slot:cell-actions="slotProps">
+      <div class="actions-buttons-container">
+        <IconButton
+          v-on:click="$emit('edit', slotProps.dataItem)"
+          iconName="edit"
+          text
+          buttonType="primary"
+          class="action-button"
+        />
+
+        <div class="button-spacer"></div>
+
+        <LongpressButton :value="slotProps.dataItem" duration="1" :onConfirm="onDeleteConfirmed">
+          <IconButton iconName="delete" text buttonType="danger" class="action-button" />
+        </LongpressButton>
+      </div>
+    </template>
+  </Grid>
 </template>
 
 <!-- Script -->
@@ -52,20 +39,56 @@ import { Category } from '@/db/models/category';
 import { defineComponent, PropType } from 'vue';
 import Icon from '@/components/misc/Icon.vue';
 import IconButton from '@/components/misc/IconButton.vue';
+import LongpressButton from '@/components/misc/LongpressButton.vue';
+import Grid from '@/components/misc/Grid/Grid.vue';
+import { ColumnInfo } from '../misc/Grid/ColumnInfo';
+import { ColumnType } from '../misc/Grid/ColumnType';
+import { nameof } from '@/common/helpers/nameof';
 
 export default defineComponent({
   name: 'Categories List',
   components: {
     Icon,
-    IconButton
+    IconButton,
+    LongpressButton,
+    Grid
   },
   emits: ['edit', 'delete'],
   props: {
     categories: Array as PropType<Array<Category>>
   },
-  setup(props) {
+  setup(props, { emit }) {
+    const onDeleteConfirmed = (category: Category) => {
+      emit('delete', category);
+    };
+
+    const columns: ColumnInfo[] = [
+      {
+        name: nameof<Category>('name'),
+        title: 'Name',
+        type: ColumnType.String,
+        sortable: true
+      },
+      {
+        name: nameof<Category>('createdOn'),
+        title: 'Created On',
+        type: ColumnType.Date,
+        sortable: true
+      },
+      {
+        name: nameof<Category>('icon'),
+        title: 'Icon'
+      },
+      {
+        name: 'actions',
+        title: 'Actions'
+      }
+    ];
+
     return {
-      props
+      props,
+      onDeleteConfirmed,
+      columns
     };
   }
 });
@@ -85,10 +108,14 @@ $darkenAmountOnHover: 10%;
 }
 
 .action-button {
-  margin: 0 5px;
-  width: 30px;
+  height: 30px;
+  width: 33px;
   display: flex;
   justify-content: center;
+}
+
+.button-spacer {
+  width: 10px;
 }
 
 tr {
