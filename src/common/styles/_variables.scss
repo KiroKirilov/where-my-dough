@@ -63,6 +63,8 @@ $text-muted:                  $gray-600 !default;
 
 $table-accent-bg:             $gray-800 !default;
 $table-border-color:          $gray-700 !default;
+$table-striped-bg-factor:     .05 !default;
+$table-striped-bg:            rgba($black, $table-striped-bg-factor) !default;
 
 // Forms
 

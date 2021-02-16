@@ -45,6 +45,7 @@ export default defineComponent({
 <!-- Styles -->
 <style scoped lang="scss">
 @import "../../common/styles/_variables.scss";
+@import "../../common/styles/constants.scss";
 
 .page-header {
   background-color: $gray-800;
@@ -56,7 +57,7 @@ export default defineComponent({
   box-shadow: 0 1px 0 rgba(2, 2, 3, 0.2), 0 1.5px 0 rgba(4, 4, 5, 0.05),
     0 2px 0 rgba(2, 2, 3, 0.05);
   margin-bottom: 1px;
-  height: 47px;
+  height: $pageHeaderHeight;
 }
 
 .page-header-elements {

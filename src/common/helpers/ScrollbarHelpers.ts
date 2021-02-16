@@ -8,8 +8,11 @@ export default class ScrollbarHelpers {
     scrollButtons: { enable: false }
   };
 
-  public static initScrollbar(selector: string) {
-    $(selector).mCustomScrollbar(this.scrollbarSettings);
+  public static initScrollbar(selector: string, opts?: any) {
+    $(selector).mCustomScrollbar({
+      ...this.scrollbarSettings,
+      ...opts
+    });
 
     // fix dragger rail location for electron
     $('.mCSB_draggerContainer').append($('.mCSB_draggerRail'));

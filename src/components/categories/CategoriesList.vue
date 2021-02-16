@@ -67,21 +67,25 @@ export default defineComponent({
         name: nameof<Category>('name'),
         title: 'Name',
         type: ColumnType.String,
-        sortable: true
+        sortable: true,
+        widthPercent: 25
       },
       {
         name: nameof<Category>('createdOn'),
         title: 'Created On',
         type: ColumnType.Date,
-        sortable: true
+        sortable: true,
+        widthPercent: 25
       },
       {
         name: nameof<Category>('icon'),
-        title: 'Icon'
+        title: 'Icon',
+        widthPercent: 20
       },
       {
         name: 'actions',
-        title: 'Actions'
+        title: 'Actions',
+        widthPercent: 30
       }
     ];
 

@@ -1,7 +1,7 @@
 <!-- Template -->
 <template>
-  <div>
-    <PageHeader title="Categories" iconName="labels">
+  <PageWithHeader headerTitle="Categories" headerIconName="labels" >
+    <template v-slot:header>
       <IconButton
         v-on:click="createdClicked"
         iconName="plus"
@@ -9,37 +9,39 @@
         buttonType="success"
         iconClass="new-category-icon"
       />
-    </PageHeader>
-  </div>
+    </template>
 
-  <div>
-    <CategoriesList
-      v-if="!categoriesError"
-      :categories="categories"
-      @edit="editClicked"
-      @delete="deleteClicked"
-    />
-  </div>
+    <template v-slot:content>
+      <div>
+        <CategoriesList
+          v-if="!categoriesError"
+          :categories="categories"
+          @edit="editClicked"
+          @delete="deleteClicked"
+        />
+      </div>
 
-  <div v-if="categoriesError">
-    <ErrorMessage
-      class="categories-error"
-      message="An error ocurred while fetching your categories :/"
-    />
-  </div>
+      <div v-if="categoriesError">
+        <ErrorMessage
+          class="categories-error"
+          message="An error ocurred while fetching your categories :/"
+        />
+      </div>
 
-  <CategoriesForm
-    @save="saveCategory"
-    @close="setDialogVisible(false)"
-    :showForm="dialogVisible"
-    :model="model"
-  />
+      <CategoriesForm
+        @save="saveCategory"
+        @close="setDialogVisible(false)"
+        :showForm="dialogVisible"
+        :model="model"
+      />
+    </template>
+  </PageWithHeader>
 </template>
 
 <!-- Script -->
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import PageHeader from '@/components/layout/PageHeader.vue';
+import PageWithHeader from '@/components/layout/PageWithHeader.vue';
 import IconButton from '@/components/misc/IconButton.vue';
 import ErrorMessage from '@/components/misc/ErrorMessage.vue';
 import CategoriesList from '@/components/categories/CategoriesList.vue';
@@ -51,7 +53,7 @@ import { Category } from '@/db/models/category';
 export default defineComponent({
   name: 'Categories',
   components: {
-    PageHeader,
+    PageWithHeader,
     CategoriesList,
     IconButton,
     CategoriesForm,

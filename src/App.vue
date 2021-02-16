@@ -12,10 +12,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent } from 'vue';
 import TitleBar from '@/components/layout/TitleBar.vue';
 import SideNav from '@/components/layout/SideNav/SideNav.vue';
-import ScrollbarHelpers from '@/common/helpers/ScrollbarHelpers';
 import 'bootstrap/dist/js/bootstrap.bundle';
 
 export default defineComponent({
@@ -23,11 +22,6 @@ export default defineComponent({
   components: {
     TitleBar,
     SideNav
-  },
-  setup() {
-    onMounted(() => {
-      ScrollbarHelpers.initScrollbar('#content');
-    });
   }
 });
 </script>
@@ -78,8 +72,8 @@ export default defineComponent({
 }
 
 #mCSB_2_scrollbar_vertical {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
 }
 
 // make bootstrap dialog faster

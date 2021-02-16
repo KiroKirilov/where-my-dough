@@ -5,4 +5,5 @@ export class ColumnInfo {
   title?: string;
   type?: ColumnType;
   sortable?: boolean;
+  widthPercent?: number
 }
