@@ -44,7 +44,7 @@
 
 <!-- Script -->
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, watch } from 'vue';
+import { computed, defineComponent, onMounted, PropType, toRefs, watch } from 'vue';
 import { ColumnInfo } from './ColumnInfo';
 import formatDateFilter from '@/filters/formatDateFilter';
 import { ColumnType } from './ColumnType';
@@ -62,8 +62,9 @@ export default defineComponent({
     columns: Array as PropType<Array<ColumnInfo>>
   },
   setup(props) {
-    const { sortInfo, applySort, sortedData, updateData } = useSortedData(
-      props.data
+    const { data } = toRefs(props);
+    const { sortInfo, applySort, sortedData } = useSortedData(
+      data as any
     );
 
     const getFieldValue = (dataItem: any, column: ColumnInfo) => {
@@ -84,13 +85,13 @@ export default defineComponent({
 
     const columnWidth = computed(() => 100 / (props.columns?.length || 1));
 
-    watch(
-      () => props.data,
+    watch(data as any,
       (newData) => {
-        updateData(newData as any);
-        applySort();
-      },
-      { deep: true }
+        if (data) {
+          data.value = newData as any;
+          applySort();
+        }
+      }
     );
 
     onMounted(() => {

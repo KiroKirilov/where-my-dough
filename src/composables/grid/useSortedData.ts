@@ -2,10 +2,9 @@ import { ColumnInfo } from '@/components/misc/Grid/ColumnInfo';
 import { ColumnType } from '@/components/misc/Grid/ColumnType';
 import { SortDirection } from '@/components/misc/Grid/SortDirection';
 import { SortInfo } from '@/components/misc/Grid/SortInfo';
-import { ref, computed } from 'vue'
+import { ref, computed, Ref } from 'vue'
 
-export default function useSortedData(inputData: any[] | undefined) {
-  const data = ref([...(inputData || [])]);
+export default function useSortedData(data: Ref<any[] | undefined>) {
   const sortInfo = ref<SortInfo>({ column: undefined, direction: SortDirection.asc });
   const sortedData = computed(() => {
     if (!sortInfo.value.column || !data.value) {
@@ -36,14 +35,9 @@ export default function useSortedData(inputData: any[] | undefined) {
     };
   }
 
-  const updateData = (newData: any[] | undefined) => {
-    data.value = newData || [];
-  }
-
   return {
     sortInfo,
     sortedData,
-    applySort,
-    updateData
+    applySort
   }
 }
