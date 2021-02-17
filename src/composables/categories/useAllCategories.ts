@@ -1,4 +1,5 @@
 
+import { sleep } from '@/common/helpers/sleep';
 import { Category } from '@/db/models/category';
 import { CategoriesRepository } from '@/db/repositories/categoriesRepository';
 import { RepositoryFactory } from '@/db/repositoryFactory';
@@ -11,15 +12,21 @@ export default function useAllCategories() {
   const categoriesError = ref(false);
   const loading = ref(false);
 
+  const stopLoading = async() => {
+    // it's too fast otherwise and it looks janky
+    await sleep(700);
+    loading.value = false;
+  }
+
   const getAllCategories = async () => {
     try {
       loading.value = true;
       categories.value = await categoriesRepo.getAll();
-      loading.value = false;
+      stopLoading();
     } catch (error) {
       console.error(error);
       categoriesError.value = true;
-      loading.value = false;
+      stopLoading();
     }
   }
 

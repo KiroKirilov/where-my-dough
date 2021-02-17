@@ -1,6 +1,6 @@
 <!-- Template -->
 <template>
-  <PageWithHeader headerTitle="Categories" headerIconName="labels" >
+  <PageWithHeader headerTitle="Categories" headerIconName="labels">
     <template v-slot:header>
       <IconButton
         v-on:click="createdClicked"
@@ -12,20 +12,27 @@
     </template>
 
     <template v-slot:content>
-      <div>
-        <CategoriesList
-          v-if="!categoriesError"
-          :categories="categories"
-          @edit="editClicked"
-          @delete="deleteClicked"
-        />
+      <div v-if="loading" class='categories-loader-container'>
+        <div class="spinner-grow text-primary categories-loader" role="status">
+        </div>
       </div>
 
-      <div v-if="categoriesError">
-        <ErrorMessage
-          class="categories-error"
-          message="An error ocurred while fetching your categories :/"
-        />
+      <div v-if="!loading">
+        <div>
+          <CategoriesList
+            v-if="!categoriesError"
+            :categories="categories"
+            @edit="editClicked"
+            @delete="deleteClicked"
+          />
+        </div>
+
+        <div v-if="categoriesError">
+          <ErrorMessage
+            class="categories-error"
+            message="An error ocurred while fetching your categories :/"
+          />
+        </div>
       </div>
 
       <CategoriesForm
@@ -127,6 +134,17 @@ export default defineComponent({
 }
 
 .categories-error {
+  margin-top: 10px;
+}
+
+.categories-loader {
+  width: 3rem;
+  height: 3rem;
+}
+
+.categories-loader-container {
+  display: flex;
+  justify-content: center;
   margin-top: 10px;
 }
 </style>

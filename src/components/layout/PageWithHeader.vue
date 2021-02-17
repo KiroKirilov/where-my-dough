@@ -43,7 +43,9 @@ export default defineComponent({
 
 <!-- Styles -->
 <style scoped lang="scss">
+@import "../../common/styles/constants.scss";
+
 .page-content {
-  height: calc(100vh - 77px);
+  height: calc(100vh - #{$titleBarHeight} - #{$pageHeaderHeight});
 }
 </style>
