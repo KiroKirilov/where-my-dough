@@ -84,7 +84,7 @@ export default defineComponent({
   emits: ['close', 'save'],
   props: {
     showForm: Boolean,
-    model: (Object as unknown) as () => Category | null
+    model: Object as () => Category | null
   },
   setup(props, { emit }) {
     const dialogTitle = computed(() =>

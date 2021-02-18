@@ -1,6 +1,6 @@
 <!-- Template -->
 <template>
-  <Grid :data="props.categories" :columns="columns">
+  <Grid :data="props.categories" :columns="columns" :loading="props.loading">
     <template v-slot:header-actions></template>
 
     <template v-slot:cell-icon="slotProps">
@@ -55,7 +55,8 @@ export default defineComponent({
   },
   emits: ['edit', 'delete'],
   props: {
-    categories: Array as PropType<Array<Category>>
+    categories: Array as PropType<Array<Category>>,
+    loading: Boolean
   },
   setup(props, { emit }) {
     const onDeleteConfirmed = (category: Category) => {

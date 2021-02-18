@@ -8,20 +8,17 @@
         text="Create Category"
         buttonType="success"
         iconClass="new-category-icon"
+        :loading="loading"
       />
     </template>
 
     <template v-slot:content>
-      <div v-if="loading" class='categories-loader-container'>
-        <div class="spinner-grow text-primary categories-loader" role="status">
-        </div>
-      </div>
-
-      <div v-if="!loading">
+      <div>
         <div>
           <CategoriesList
             v-if="!categoriesError"
             :categories="categories"
+            :loading="loading"
             @edit="editClicked"
             @delete="deleteClicked"
           />

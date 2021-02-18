@@ -4,14 +4,23 @@
     type="button"
     v-bind:class="`btn btn-${props.buttonType} ${props.buttonSize}`"
     class="icon-button"
+    :disabled="props.loading"
   >
     <Icon
       :color="props.iconColor"
-      v-if="props.iconName"
+      v-if="props.iconName && !props.loading"
       class="icon-button-icon"
       :name="props.iconName"
       v-bind:class="props.iconClass"
     />
+    <div v-if="props.loading">
+      <span
+        v-bind:class="props.iconClass"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </div>
     <div class="icon-button-text">{{props.text}}</div>
   </button>
 </template>
@@ -31,6 +40,7 @@ export default defineComponent({
     text: String,
     iconClass: String,
     iconColor: String,
+    loading: Boolean,
     buttonSize: {
       type: String,
       validator: function (value: string) {

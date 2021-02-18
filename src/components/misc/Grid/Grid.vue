@@ -1,6 +1,10 @@
 <!-- Template -->
 <template>
-  <div>
+  <div v-if="props.loading">
+    <GridLoader :columns="columns" :rows="20" />
+  </div>
+
+  <div v-if="!props.loading">
     <div class="grid-header">
       <div
       class="grid-header-cell"
@@ -44,25 +48,29 @@
 
 <!-- Script -->
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, toRefs, watch } from 'vue';
+import { computed, defineComponent, onUpdated, PropType, ref, toRefs, watch } from 'vue';
 import { ColumnInfo } from './ColumnInfo';
 import formatDateFilter from '@/filters/formatDateFilter';
 import { ColumnType } from './ColumnType';
 import useSortedData from '@/composables/grid/useSortedData';
 import SortArrow from './SortArrow.vue';
 import ScrollbarHelpers from '@/common/helpers/ScrollbarHelpers';
+import GridLoader from './GridLoader.vue';
 
 export default defineComponent({
   name: 'Grid',
   components: {
-    SortArrow
+    SortArrow,
+    GridLoader
   },
   props: {
     data: Array as PropType<Array<any>>,
-    columns: Array as PropType<Array<ColumnInfo>>
+    columns: Array as PropType<Array<ColumnInfo>>,
+    loading: Boolean
   },
   setup(props) {
     const { data } = toRefs(props);
+    const scrollbarInitialized = ref(false);
     const { sortInfo, applySort, sortedData } = useSortedData(
       data as any
     );
@@ -94,10 +102,14 @@ export default defineComponent({
       }
     );
 
-    onMounted(() => {
-      ScrollbarHelpers.initScrollbar('.grid-body', {
-        alwaysShowScrollbar: 2
-      });
+    onUpdated(() => {
+      if (!scrollbarInitialized.value && !props.loading) {
+        ScrollbarHelpers.initScrollbar('.grid-body', {
+          alwaysShowScrollbar: 2
+        });
+
+        scrollbarInitialized.value = true;
+      }
     });
 
     return {
