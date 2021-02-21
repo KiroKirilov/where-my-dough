@@ -87,12 +87,14 @@ export default defineComponent({
     model: Object as () => Category | null
   },
   setup(props, { emit }) {
+    const defaultIcon = 'money';
+    const defaultIconColor = '#ffffff'
     const dialogTitle = computed(() =>
       props.model ? 'Edit Category' : 'New Category'
     );
     const dialogIcon = computed(() => (props.model ? 'edit' : 'plus-circle'));
-    const icon = ref('money');
-    const iconColor = useDebouncedRef('#ffffff');
+    const icon = ref(defaultIcon);
+    const iconColor = useDebouncedRef(defaultIconColor);
     const name = ref('');
     const valdiationErrors = ref<any>({});
 
@@ -100,6 +102,11 @@ export default defineComponent({
       () => props.showForm,
       () => {
         valdiationErrors.value = {};
+        if (!props.showForm) {
+          icon.value = defaultIcon;
+          iconColor.value = defaultIconColor;
+          name.value = '';
+        }
       }
     );
 
@@ -108,8 +115,8 @@ export default defineComponent({
       () => {
         const model = props.model;
         name.value = model?.name || '';
-        icon.value = model?.icon || 'money';
-        iconColor.value = model?.iconColor || '#ffffff';
+        icon.value = model?.icon || defaultIcon;
+        iconColor.value = model?.iconColor || defaultIconColor;
       },
       {
         deep: true

@@ -5,12 +5,14 @@ const db = DbProvider.getDbInstance();
 
 export abstract class DbRepository<TModel extends BaseModel> {
   protected abstract type: string;
-
-  public async getAll(): Promise<TModel[]> {
-    await db.createIndex({
+  private ensureIndex() {
+    return db.createIndex({
       index: { fields: ['createdOn', 'type'] }
     });
+  }
 
+  public async getAll(): Promise<TModel[]> {
+    await this.ensureIndex();
     const data = await db.find({
       selector: {
         createdOn: {
@@ -24,6 +26,25 @@ export abstract class DbRepository<TModel extends BaseModel> {
     });
 
     return (data.docs as unknown) as TModel[];
+  }
+
+  public async getSingle(): Promise<TModel> {
+    await this.ensureIndex();
+
+    const data = await db.find({
+      selector: {
+        createdOn: {
+          $gt: null
+        },
+        type: this.type
+      },
+      sort: [{
+        createdOn: 'desc'
+      }],
+      limit: 1
+    });
+
+    return (data.docs[0] as unknown) as TModel;
   }
 
   public create(model: TModel) {

@@ -28,6 +28,8 @@
           <ErrorMessage
             class="categories-error"
             message="An error ocurred while fetching your categories :/"
+            :onRetry="getAllCategories"
+            :retrying="loading"
           />
         </div>
       </div>
@@ -118,7 +120,8 @@ export default defineComponent({
       createdClicked,
       categoriesError,
       loading,
-      deleteClicked
+      deleteClicked,
+      getAllCategories
     };
   }
 });

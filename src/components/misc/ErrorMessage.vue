@@ -3,12 +3,22 @@
   <div class="alert alert-danger error-message" role="alert">
     <Icon name="alert-triangle" class="error-message-icon" />
     <div>{{ props.message }}</div>
+
+    <div v-if="props.onRetry" class="additional-content-separator"></div>
+
+    <Icon
+      v-if="props.onRetry"
+      v-on:click="props.onRetry"
+      name="refresh"
+      class="error-message-icon retry-icon"
+      v-bind:class="{'in-progress': props.retrying}"
+    />
   </div>
 </template>
 
 <!-- Script -->
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import Icon from '@/components/misc/Icon.vue';
 
 export default defineComponent({
@@ -17,11 +27,21 @@ export default defineComponent({
     Icon
   },
   props: {
-    message: String
+    message: String,
+    onRetry: Function,
+    retrying: Boolean
   },
-  setup(props) {
+  inheritAttrs: false,
+  setup(props, ctx) {
+    const a = computed(() => {
+      console.log(ctx);
+      return 5;
+    });
+
     return {
-      props
+      props,
+      console,
+      a
     };
   }
 });
@@ -29,6 +49,8 @@ export default defineComponent({
 
 <!-- Styles -->
 <style scoped lang="scss">
+@import "../../common/styles/_variables.scss";
+
 .error-message {
   display: flex;
   align-items: center;
@@ -38,5 +60,32 @@ export default defineComponent({
 .error-message-icon {
   font-size: 28px;
   margin-right: 10px;
+
+  &.retry-icon {
+    margin-right: 0;
+    cursor: pointer;
+
+    &.in-progress {
+      animation: rotating 1.5s linear infinite;
+      margin-top: -3px;
+    }
+  }
+}
+
+.additional-content-separator {
+  background-color: darken($danger, 10%);
+  height: 25px;
+  width: 2px;
+  margin: 0 15px;
+  border-radius: 10px;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

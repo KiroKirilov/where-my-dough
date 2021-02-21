@@ -4,6 +4,7 @@
     <SideNavLink class="sidebar-link" to="/" title="Home" iconName="home" />
     <hr class="side-nav-separator" />
     <SideNavLink class="sidebar-link" to="/categories" title="Categories" iconName="labels" />
+    <SideNavLink class="sidebar-link" to="/settings" title="Settings" iconName="settings" />
     <SideNavLink class="sidebar-link" to="/my-route" title="My Route" />
   </nav>
 </template>
