@@ -1,11 +1,10 @@
 <!-- Template -->
 <template>
   <nav id="sidebar">
-    <SideNavLink class="sidebar-link" to="/" title="Home" iconName="home" />
+    <SideNavLink class="sidebar-link" to="/" title="Expenses" iconName="money" />
     <hr class="side-nav-separator" />
     <SideNavLink class="sidebar-link" to="/categories" title="Categories" iconName="labels" />
     <SideNavLink class="sidebar-link" to="/settings" title="Settings" iconName="settings" />
-    <SideNavLink class="sidebar-link" to="/my-route" title="My Route" />
   </nav>
 </template>
 

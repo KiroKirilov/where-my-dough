@@ -16,6 +16,7 @@ async function createWindow () {
   const win = new BrowserWindow({
     width: 1200,
     height: 720,
+    icon: 'build/icon.png',
     titleBarStyle: 'hidden',
     frame: false,
     webPreferences: {
@@ -24,7 +25,7 @@ async function createWindow () {
       nodeIntegration: (process.env
         .ELECTRON_NODE_INTEGRATION as unknown) as boolean
     }
-  })
+  });
 
   // Custom events
   registerTitleBarEvents();

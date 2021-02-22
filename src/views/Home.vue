@@ -1,18 +1,21 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" v-bind:src="require('../assets/logo.png')">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+  <PageWithHeader headerTitle="Money Management" headerIconName="money">
+    <template v-slot:content>
+      <div>
+        hi
+      </div>
+    </template>
+  </PageWithHeader>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
+import PageWithHeader from '@/components/layout/PageWithHeader.vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
-    HelloWorld
+    PageWithHeader
   }
 })
 </script>

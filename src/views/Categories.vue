@@ -76,18 +76,15 @@ export default defineComponent({
     const [dialogVisible, setDialogVisible] = useRefWithSetter(false);
     const model = ref<Category | null>(null);
 
-    const saveCategory = (category: Category) => {
+    const saveCategory = async (category: Category) => {
       if (category._id) {
-        categoriesRepo.update(category).then(() => {
-          getAllCategories();
-          setDialogVisible(false);
-        });
+        await categoriesRepo.update(category);
       } else {
-        categoriesRepo.create(category).then(() => {
-          getAllCategories();
-          setDialogVisible(false);
-        });
+        await categoriesRepo.create(category);
       }
+
+      getAllCategories();
+      setDialogVisible(false);
     };
 
     const createdClicked = () => {

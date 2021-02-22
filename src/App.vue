@@ -75,7 +75,7 @@ export default defineComponent({
   }
 }
 
-#mCSB_2_scrollbar_vertical {
+.mCSB_scrollTools_vertical {
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
