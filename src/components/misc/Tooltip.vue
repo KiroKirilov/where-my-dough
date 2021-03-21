@@ -3,32 +3,25 @@
   <div class="tooltip-host">
     <slot></slot>
 
-    <div class="tooltip-relative" v-bind:class="placementClass">
-      <div class="tooltip-content" v-bind:class="placementClass">{{props.content}}</div>
+    <div class="tooltip-relative placement-right" v-bind:style="{ top: (props.top || -80) + '%' }" >
+      <div class="tooltip-content placement-right">{{props.content}}</div>
     </div>
   </div>
 </template>
 
 <!-- Script -->
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Tooltip',
   props: {
     content: String,
-    placement: {
-      type: String,
-      validator: (value: string) => ['right', 'top'].indexOf(value) !== -1,
-      default: () => 'right'
-    }
+    top: Number
   },
   setup(props) {
-    const placementClass = computed(() => `placement-${props.placement}`);
-
     return {
-      props,
-      placementClass
+      props
     };
   }
 });

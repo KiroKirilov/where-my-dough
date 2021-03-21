@@ -1,0 +1,15 @@
+.form-buttons-container {
+  display: flex;
+}
+
+.form-button {
+  width: 81px;
+  margin: 0 5px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

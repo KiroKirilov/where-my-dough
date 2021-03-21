@@ -97,14 +97,11 @@ export default defineComponent({
       setDialogVisible(true);
     };
 
-    const deleteClicked = (category: Category) => {
+    const deleteClicked = async (category: Category) => {
       if (category?._id) {
-        categoriesRepo.delete(category).then(() => {
-          getAllCategories();
-        });
+        await categoriesRepo.delete(category)
+        getAllCategories();
       }
-
-      // TODO: Update expenses for this category
     };
 
     return {

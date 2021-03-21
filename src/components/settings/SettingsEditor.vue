@@ -88,8 +88,8 @@ export default defineComponent({
 
     const saveBudget = () => {
       const newSettings = {
-        ...props.settings,
-        monthlyBudget: Number(monthlyBudget.value)
+        monthlyBudget: Number(monthlyBudget.value),
+        targetSavings: props.settings?.targetSavings
       }
 
       emit('save', newSettings);
@@ -97,7 +97,7 @@ export default defineComponent({
 
     const saveTargetSavings = () => {
       const newSettings = {
-        ...props.settings,
+        monthlyBudget: props.settings?.monthlyBudget,
         targetSavings: Number(targetSavings.value)
       }
 

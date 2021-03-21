@@ -1,7 +1,7 @@
 <!-- Template -->
 <template>
   <nav id="sidebar">
-    <SideNavLink class="sidebar-link" to="/" title="Expenses" iconName="money" />
+    <SideNavLink class="sidebar-link" to="/" title="Money Management" iconName="money" />
     <hr class="side-nav-separator" />
     <SideNavLink class="sidebar-link" to="/categories" title="Categories" iconName="labels" />
     <SideNavLink class="sidebar-link" to="/settings" title="Settings" iconName="settings" />

@@ -50,7 +50,7 @@
 <script lang="ts">
 import { computed, defineComponent, onUpdated, PropType, ref, toRefs, watch } from 'vue';
 import { ColumnInfo } from './ColumnInfo';
-import formatDateFilter from '@/filters/formatDateFilter';
+import { dateFormatFilter } from '@/filters/dateFilters';
 import { ColumnType } from './ColumnType';
 import useSortedData from '@/composables/grid/useSortedData';
 import SortArrow from './SortArrow.vue';
@@ -78,7 +78,7 @@ export default defineComponent({
     const getFieldValue = (dataItem: any, column: ColumnInfo) => {
       switch (column.type) {
         case ColumnType.Date:
-          return formatDateFilter(dataItem[column.name]);
+          return dateFormatFilter(dataItem[column.name]);
 
         default:
           return dataItem[column.name];

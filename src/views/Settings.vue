@@ -44,13 +44,8 @@ export default defineComponent({
     } = useSettings();
 
     const saveSettings = async (newSettings: Settings) => {
-      if (newSettings._id) {
-        await settingsRepo.update(newSettings);
-        getSettings()
-      } else {
-        await settingsRepo.create(newSettings);
-        getSettings();
-      }
+      await settingsRepo.create(newSettings);
+      getSettings();
     }
 
     return {

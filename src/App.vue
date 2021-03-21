@@ -39,7 +39,29 @@ export default defineComponent({
 @import "./assets/material-design-iconic-font/css/material-design-iconic-font.min.css";
 
 @import "./common/styles/mixins.scss";
+@import "./common/styles/functions.scss";
 @import "../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css";
+
+:root {
+  --vdp-selected-bg-color: #{$primary};
+  --vdp-bg-color: #{$gray-800};
+  --vdp-text-color: $body-color;
+  --vdp-heading-hover-color: none;
+  --vdp-hover-bg-color: #{$primary};
+}
+
+.v3dp__elements button span {
+  transition: 0.2s !important;
+}
+
+.v3dp__divider {
+  margin-top: 5px !important;
+}
+
+.v3dp__popout {
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 #main-app-wrapper {
   display: flex;
@@ -93,5 +115,96 @@ export default defineComponent({
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.month-picker {
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+
+.month-picker-input-container {
+  overflow: visible !important;
+
+  input.month-picker-input {
+    @extend .form-control;
+  }
+}
+
+.month-picker__container {
+  background-color: $dark !important;
+  border-color: $dark !important;
+}
+
+.month-picker__month {
+  background-color: $gray-800 !important;
+  flex-basis: 33.333% !important;
+  border-color: $dark !important;
+  transition: 0.2s !important;
+
+  &.selected {
+    font-weight: bold;
+    box-shadow: inset 0 0 3px $primary, 0px 2px 5px rgba(85, 176, 242, 0.2) !important;
+    background: $primary !important;
+  }
+}
+
+.month-picker__year {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-evenly !important;
+  width: 100%;
+  height: 50px !important;
+
+  button {
+    background-color: $gray-700 !important;
+    border-color: $dark !important;
+    color: $body-color !important;
+    height: 38px !important;
+    width: 50px !important;
+    position: initial !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+    flex: initial !important;
+  }
+
+  p {
+    flex: initial !important;
+    width: 33.333% !important;
+  }
+}
+
+.single-line-month-picker {
+  width: 100% !important;
+
+  .month-picker {
+    flex-wrap: nowrap !important;
+  }
+
+  .month-picker__month {
+    padding: 0.4rem 0.25rem !important;
+  }
+
+  .month-picker__year {
+    height: 29px !important;
+    justify-content: center !important;
+
+    button {
+      height: 21px !important;
+      width: 32px !important;
+      padding-bottom: 9px !important;
+    }
+
+    p {
+      width: 18% !important;
+    }
+  }
+}
+
+.apexcharts-canvas svg {
+  background-color: $gray-800 !important;
+  border-radius: 5px;
+  border: 1px solid $dark;
 }
 </style>

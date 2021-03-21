@@ -17,6 +17,7 @@ module.exports = {
     'semi': 'off',
     'space-before-function-paren': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/camelcase': 'off'
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off'
   }
 }

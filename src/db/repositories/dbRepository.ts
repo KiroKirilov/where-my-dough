@@ -5,7 +5,8 @@ const db = DbProvider.getDbInstance();
 
 export abstract class DbRepository<TModel extends BaseModel> {
   protected abstract type: string;
-  private ensureIndex() {
+  protected db: PouchDB.Database<{}> = db;
+  protected ensureIndex() {
     return db.createIndex({
       index: { fields: ['createdOn', 'type'] }
     });
@@ -28,7 +29,7 @@ export abstract class DbRepository<TModel extends BaseModel> {
     return (data.docs as unknown) as TModel[];
   }
 
-  public async getSingle(): Promise<TModel> {
+  public async getLatest(): Promise<TModel> {
     await this.ensureIndex();
 
     const data = await db.find({
@@ -61,7 +62,12 @@ export abstract class DbRepository<TModel extends BaseModel> {
     return db.remove(model._id || '', model._rev || '', undefined);
   }
 
-  public clearDb() {
-    console.log('a');
+  public async clearTable() {
+    const itemsToDelete = await this.getAll();
+    return db.bulkDocs(itemsToDelete.map(x => ({
+      _id: x._id,
+      _rev: x._rev,
+      _deleted: true
+    })))
   }
 }

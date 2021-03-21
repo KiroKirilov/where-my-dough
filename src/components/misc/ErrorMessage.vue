@@ -2,7 +2,7 @@
 <template>
   <div class="alert alert-danger error-message" role="alert">
     <Icon name="alert-triangle" class="error-message-icon" />
-    <div>{{ props.message }}</div>
+    <div class="error-message-text">{{ props.message }}</div>
 
     <div v-if="props.onRetry" class="additional-content-separator"></div>
 
@@ -18,7 +18,7 @@
 
 <!-- Script -->
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import Icon from '@/components/misc/Icon.vue';
 
 export default defineComponent({
@@ -32,16 +32,10 @@ export default defineComponent({
     retrying: Boolean
   },
   inheritAttrs: false,
-  setup(props, ctx) {
-    const a = computed(() => {
-      console.log(ctx);
-      return 5;
-    });
-
+  setup(props) {
     return {
       props,
-      console,
-      a
+      console
     };
   }
 });
@@ -70,6 +64,10 @@ export default defineComponent({
       margin-top: -3px;
     }
   }
+}
+
+.error-message-text {
+  width: 86%;
 }
 
 .additional-content-separator {

@@ -16,6 +16,8 @@ async function createWindow () {
   const win = new BrowserWindow({
     width: 1200,
     height: 720,
+    minWidth: 940,
+    minHeight: 500,
     icon: 'build/icon.png',
     titleBarStyle: 'hidden',
     frame: false,

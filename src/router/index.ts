@@ -1,24 +1,22 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
+import MoneyManagement from '../views/MoneyManagement.vue'
 import Categories from '../views/Categories.vue'
 import Settings from '../views/Settings.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'MoneyManagement',
+    component: MoneyManagement
   },
   {
     path: '/categories',
     name: 'Categories',
-    // component: () => import(/* webpackChunkName: "categories" */ '../views/Categories.vue')
     component: Categories
   },
   {
     path: '/settings',
     name: 'Settings',
-    // component: () => import(/* webpackChunkName: "settings" */ '../views/Settings.vue')
     component: Settings
   }
 ]

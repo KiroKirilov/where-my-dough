@@ -98,14 +98,19 @@ export default defineComponent({
     const name = ref('');
     const valdiationErrors = ref<any>({});
 
+    const initFIelds = () => {
+      const model = props.model;
+      name.value = model?.name || '';
+      icon.value = model?.icon || defaultIcon;
+      iconColor.value = model?.iconColor || defaultIconColor;
+    }
+
     watch(
       () => props.showForm,
       () => {
         valdiationErrors.value = {};
-        if (!props.showForm) {
-          icon.value = defaultIcon;
-          iconColor.value = defaultIconColor;
-          name.value = '';
+        if (props.showForm) {
+          initFIelds();
         }
       }
     );
@@ -113,10 +118,7 @@ export default defineComponent({
     watch(
       () => props.model?._id,
       () => {
-        const model = props.model;
-        name.value = model?.name || '';
-        icon.value = model?.icon || defaultIcon;
-        iconColor.value = model?.iconColor || defaultIconColor;
+        initFIelds();
       },
       {
         deep: true
@@ -158,15 +160,7 @@ export default defineComponent({
 <!-- Styles -->
 <style scoped lang="scss">
 @import "../../common/styles/_variables.scss";
-
-.form-buttons-container {
-  display: flex;
-}
-
-.form-button {
-  width: 81px;
-  margin: 0 5px;
-}
+@import "../../common/styles/forms.scss";
 
 .category-icon-container {
   display: flex;
@@ -188,13 +182,6 @@ export default defineComponent({
   &:hover {
     background-color: $primary;
   }
-}
-
-.form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 .has-validaiton-message {
