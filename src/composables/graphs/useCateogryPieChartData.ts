@@ -12,6 +12,7 @@ class CategoryInfo {
 }
 
 const noCategoryLabel = 'No category';
+const categoryInfoSeparator = '|||';
 
 const parseCategoryString: (categoryString: string) => CategoryInfo = (categoryString: string) => {
   if (categoryString === noCategoryLabel || !categoryString) {
@@ -20,7 +21,7 @@ const parseCategoryString: (categoryString: string) => CategoryInfo = (categoryS
     };
   }
 
-  const parts = categoryString.split('-');
+  const parts = categoryString.split(categoryInfoSeparator);
 
   return {
     name: parts[0],
@@ -39,7 +40,7 @@ export function useCateogryPieChartData(transactions?: Ref<Transaction[] | undef
     return groupBy(
       (transactions?.value || []),
       (x) => x.category
-        ? `${x.category.name}-${x.category.icon}-${x.category.iconColor}-${x.categoryId}`
+        ? `${x.category.name}${categoryInfoSeparator}${x.category.icon}${categoryInfoSeparator}${x.category.iconColor}${categoryInfoSeparator}${x.categoryId}`
         : noCategoryLabel
     )
       .filter(x => sumAmounts(x.items) < 0);

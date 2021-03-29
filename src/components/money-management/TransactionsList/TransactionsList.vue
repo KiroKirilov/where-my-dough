@@ -54,9 +54,7 @@ export default defineComponent({
 
     onMounted(() => {
       if (!scrollbarInitialized.value) {
-        ScrollbarHelpers.initScrollbar('.transactions-scroll', {
-          alwaysShowScrollbar: 2
-        });
+        ScrollbarHelpers.initScrollbar('.transactions-scroll');
 
         scrollbarInitialized.value = true;
       }

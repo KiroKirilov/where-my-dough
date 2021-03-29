@@ -91,10 +91,6 @@ export default defineComponent({
 
 .mCSB_inside > .mCSB_container {
   margin-right: 15px !important;
-
-  &.mCS_no_scrollbar_y {
-    margin-right: 0 !important;
-  }
 }
 
 .mCSB_scrollTools_vertical {
