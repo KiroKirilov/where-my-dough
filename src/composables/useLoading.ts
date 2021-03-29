@@ -5,12 +5,12 @@ export default function useLoading() {
   const loading = ref(false);
 
   const startLoading = () => {
-    // loading.value = true;
+    loading.value = true;
   }
 
   const stopLoading = async () => {
     // it's too fast otherwise and it looks janky
-    // await sleep(700);
+    await sleep(700);
     loading.value = false;
   }
 

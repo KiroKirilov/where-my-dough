@@ -1,7 +1,7 @@
 import { computed, onMounted, ref } from 'vue';
 import useLoading from './useLoading';
 
-export function useData<T>(getDataFunc: () => Promise<T | undefined>) {
+export function useData<T>(getDataFunc: () => Promise<T | undefined>, loadingEnabled = false) {
   const data = ref<T>();
   const error = ref<any>();
   const hasError = computed(() => !!error.value);
@@ -9,14 +9,20 @@ export function useData<T>(getDataFunc: () => Promise<T | undefined>) {
 
   const getData = async () => {
     try {
-      startLoading();
+      if (loadingEnabled) {
+        startLoading();
+      }
       data.value = await getDataFunc();
-      stopLoading();
+      if (loadingEnabled) {
+        stopLoading();
+      }
       error.value = undefined;
     } catch (er) {
       console.error(er);
       error.value = er;
-      stopLoading();
+      if (loadingEnabled) {
+        stopLoading();
+      }
     }
   }
 
