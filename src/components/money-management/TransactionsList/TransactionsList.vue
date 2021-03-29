@@ -8,13 +8,17 @@
     </div>
 
     <div v-if="!props.loading">
-      <div v-for="group in groups" v-bind:key="group.key">
-        <TransactionGroup
-          :groupKey="group.key"
-          :items="group.items"
-          @edit="$emit('edit', $event)"
-          @delete="$emit('delete', $event)"
-        />
+      <div v-if="!groups.length" class="no-data-message">No data available</div>
+
+      <div v-if="groups.length">
+        <div v-for="group in groups" v-bind:key="group.key">
+          <TransactionGroup
+            :groupKey="group.key"
+            :items="group.items"
+            @edit="$emit('edit', $event)"
+            @delete="$emit('delete', $event)"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -71,5 +75,9 @@ export default defineComponent({
 <style scoped lang="scss">
 .transactions-scroll {
   height: 100%;
+}
+
+.no-data-message {
+  text-align: center;
 }
 </style>

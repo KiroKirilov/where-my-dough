@@ -83,6 +83,9 @@ export function useCateogryPieChartData(transactions?: Ref<Transaction[] | undef
       categoryStrings: expensesByCategory.value.map((x) => x.key),
       title: {
         text: 'Expenses per category'
+      },
+      noData: {
+        text: 'No data available'
       }
     }
   });
