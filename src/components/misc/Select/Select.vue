@@ -256,6 +256,7 @@ export default defineComponent({
 .option-item {
   cursor: pointer;
   padding: 5px 10px;
+  padding-left: 4px;
   display: flex;
   align-items: center;
 
@@ -278,6 +279,10 @@ export default defineComponent({
 .select-option-icon {
   margin-right: 5px;
   font-size: 22px;
+  width: 12%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .is-invalid {
