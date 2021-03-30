@@ -17,4 +17,11 @@ export default class ScrollbarHelpers {
     // fix dragger rail location for electron
     $('.mCSB_draggerContainer').append($('.mCSB_draggerRail'));
   }
+
+  public static scrollToElement(containerSelector: string, itemSelector: string) {
+    const itemOffsetTop = $(itemSelector)[0].offsetTop;
+    $(containerSelector).mCustomScrollbar('scrollTo', itemOffsetTop, {
+      scrollInertia: 200
+    });
+  }
 }

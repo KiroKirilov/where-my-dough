@@ -9,6 +9,7 @@
         <input
           v-model="searchValue"
           v-bind:placeholder="selectedOptionValue"
+          @keydown="handleKeyDown"
           v-bind:class="{'highlight-placeholder': !isOpen, [props.inputClass]: true}"
           class="form-control"
           id="selectInput"
@@ -30,8 +31,9 @@
             v-for="option in optionsMatchingSearch"
             v-bind:key="option.key"
             v-on:click="handleOptionClick(option)"
-            v-bind:class="{'is-selected': option.key === modelValue}"
+            v-bind:class="{'is-selected': option.key === modelValue || option.key === hightlighedOption}"
             class="option-item"
+            :id="option.key"
           >
             <Icon
               v-if="option.icon"
@@ -69,25 +71,27 @@ export default defineComponent({
   setup(props, { emit }) {
     const isOpen = ref(false);
     const searchValue = ref('');
+    const hightlighedOption = ref<string | undefined>('');
     const toggle = () => {
       isOpen.value = !isOpen.value;
     };
 
     const close = () => {
+      searchValue.value = '';
       isOpen.value = false;
     };
 
     watch(searchValue, () => {
-      if (!isOpen.value) {
+      if (!isOpen.value && searchValue.value) {
         isOpen.value = true;
       }
     });
 
     const optionsMatchingSearch = computed(() => {
-      const cleanSearchValue = (searchValue.value || '').trim();
+      const cleanSearchValue = (searchValue.value || '').trim().toLowerCase();
 
       return (props.options || []).filter((x) =>
-        x.value.includes(cleanSearchValue)
+        x.value.toLowerCase().includes(cleanSearchValue)
       );
     });
 
@@ -100,13 +104,87 @@ export default defineComponent({
     });
 
     const handleOptionClick = (clickedOption: Option) => {
-      isOpen.value = false;
+      close();
       emit('update:modelValue', clickedOption.key);
     };
 
     const selectedOptionValue = computed(() => {
       return props.options?.find((x) => x.key === props.modelValue)?.value;
     });
+
+    const updateHighlightedOption = (newValue?: string) => {
+      hightlighedOption.value = newValue;
+      if (newValue) {
+        ScrollbarHelpers.scrollToElement('.option-items', `.option-item#${newValue}`)
+      }
+    }
+
+    const highlightFirstOption = () => {
+      const firstOption = optionsMatchingSearch.value ? optionsMatchingSearch.value[0] : undefined;
+      updateHighlightedOption(firstOption?.key)
+    };
+
+    const highlightLastOption = () => {
+      const lastOption = optionsMatchingSearch.value
+        ? optionsMatchingSearch.value[optionsMatchingSearch.value.length - 1]
+        : undefined;
+      updateHighlightedOption(lastOption?.key)
+    };
+    const handleKeyDown = (e: any) => {
+      const keyCode = e.keyCode;
+
+      // up arrow
+      if (keyCode === 38) {
+        if (!hightlighedOption.value) {
+          highlightFirstOption();
+        } else {
+          const options = optionsMatchingSearch.value || [];
+          const currentOptionIndex = options.findIndex(
+            (x) => x.key === hightlighedOption.value
+          );
+          const hasPrev = currentOptionIndex > 0;
+          if (hasPrev) {
+            updateHighlightedOption(options[currentOptionIndex - 1].key);
+          } else {
+            highlightLastOption();
+          }
+        }
+      }
+
+      // down arrow
+      if (keyCode === 40) {
+        if (!hightlighedOption.value) {
+          highlightFirstOption();
+        } else {
+          const options = optionsMatchingSearch.value || [];
+          const currentOptionIndex = options.findIndex(
+            (x) => x.key === hightlighedOption.value
+          );
+          const hasNext = currentOptionIndex < options.length - 1;
+          if (hasNext) {
+            updateHighlightedOption(options[currentOptionIndex + 1].key)
+          } else {
+            highlightFirstOption();
+          }
+        }
+      }
+
+      // enter
+      if (keyCode === 13) {
+        const options = optionsMatchingSearch.value || [];
+        const newOption = options.find(
+          (x) => x.key === hightlighedOption.value
+        );
+        if (newOption) {
+          handleOptionClick(newOption);
+        }
+      }
+
+      // escape
+      if (keyCode === 27) {
+        close();
+      }
+    };
 
     return {
       props,
@@ -116,7 +194,9 @@ export default defineComponent({
       optionsMatchingSearch,
       handleOptionClick,
       selectedOptionValue,
-      close
+      close,
+      handleKeyDown,
+      hightlighedOption
     };
   }
 });

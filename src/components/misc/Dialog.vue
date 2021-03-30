@@ -66,7 +66,8 @@ export default defineComponent({
     onMounted(() => {
       const element = document.getElementById('dialog') as Element;
       modal.value = new Modal(element, {
-        backdrop: 'static'
+        backdrop: 'static',
+        keyboard: false
       });
       modal.value.hide();
     });
