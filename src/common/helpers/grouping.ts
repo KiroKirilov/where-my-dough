@@ -22,7 +22,7 @@ export function groupedToArr<TItem>(grouped: GroupedArray<TItem>) {
   return groups;
 }
 
-export function groupBy<TItem, TKeyInfo>(arr: TItem[], expr: (item: TItem) => string | number): Group<TItem>[] {
+export function groupBy<TItem>(arr: TItem[], expr: (item: TItem) => string | number): Group<TItem>[] {
   const grouped: GroupedArray<TItem> = {};
 
   for (const item of arr) {
